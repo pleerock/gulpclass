@@ -3,9 +3,9 @@ import * as gulp from "gulp";
 
 const del: any = require('del');
 const shell: any = require('gulp-shell');
-const fs: any = require('fs');
 const replace: any = require('gulp-replace');
 const dtsGenerator: any = require('dts-generator').default;
+const recursive: any = require('recursive-readdir');
 
 @Gulpclass()
 export class Gulpfile {
@@ -72,14 +72,16 @@ export class Gulpfile {
      */
     @Task()
     packageGenerateDts(cb: Function) {
-        let name = require(__dirname + '/../../package.json').name;
-        dtsGenerator({
-            name: name,
-            baseDir: './src',
-            files: this.getFiles('./src'),
-            out: './build/package/' + name + '.d.ts'
+        recursive('./src', ['*.js'], function (err: any, files: string[]) {
+            let name = require(__dirname + '/../../package.json').name;
+            dtsGenerator({
+                name: name,
+                baseDir: './src',
+                files: files,
+                out: './build/package/' + name + '.d.ts'
+            });
+            cb();
         });
-        cb();
     }
 
     /**
@@ -92,23 +94,6 @@ export class Gulpfile {
             'compile',
             ['packageFiles', 'packagePreparePackageFile', 'packageReadmeFile', 'packageGenerateDts']
         ];
-    }
-
-    // -------------------------------------------------------------------------
-    // Private Methods
-    // -------------------------------------------------------------------------
-
-    private getFiles(dir: string, files: string[] = []): string[] {
-        var filesInDir = fs.readdirSync(dir);
-        for (var i in filesInDir) {
-            var name = dir + '/' + filesInDir[i];
-            if (fs.statSync(name).isDirectory()) {
-                this.getFiles(name, files);
-            } else {
-                files.push(name);
-            }
-        }
-        return files;
     }
 
 }
