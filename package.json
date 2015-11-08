@@ -1,0 +1,47 @@
+{
+  "name": "gulpfile.ts",
+  "version": "0.0.1",
+  "description": "Make a beautiful class-based gulpfiles with Typescript and Gulpfile.ts",
+  "license": "Apache-2.0",
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "Umed Khudoiberdiev",
+    "email": "zarrhost@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PLEEROCK/gulpfile.ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PLEEROCK/gulpfile.ts/issues"
+  },
+  "tags": [
+    "typescript-gulp",
+    "typescript-gulpfile",
+    "gulpfile.ts",
+    "gulp"
+  ],
+  "typings": "./gulpfile.ts.d.ts",
+  "typescript": {
+    "definitions": [
+      "gulpfile.ts.d.ts"
+    ]
+  },
+  "dependencies": {
+    "gulp": "*",
+    "run-sequence": "*"
+  },
+  "devDependencies": {
+    "del": "^2.0.2",
+    "dts-generator": "^1.6.0",
+    "fs": "0.0.2",
+    "gulp-plumber": "^1.0.1",
+    "gulp-shell": "^0.5.0",
+    "gulp-typescript": "^2.9.0",
+    "tsd": "^0.6.4",
+    "typescript": "^1.6.2"
+  },
+  "scripts": {
+    "postversion": "./node_modules/.bin/gulp package"
+  }
+}
