@@ -5,7 +5,7 @@ const del: any = require('del');
 const shell: any = require('gulp-shell');
 const replace: any = require('gulp-replace');
 const dtsGenerator: any = require('dts-generator').default;
-const recursive: any = require('recursive-readdir');
+const glob: any = require('glob');
 
 @Gulpclass()
 export class Gulpfile {
@@ -72,7 +72,7 @@ export class Gulpfile {
      */
     @Task()
     packageGenerateDts(cb: Function) {
-        recursive('./src', ['*.js'], function (err: any, files: string[]) {
+        glob('./src/**/*.ts', (err: any, files: string[]) => {
             let name = require(__dirname + '/../../package.json').name;
             dtsGenerator({
                 name: name,
