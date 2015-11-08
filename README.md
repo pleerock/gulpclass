@@ -41,13 +41,13 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
                     .pipe(gulp.dest('./dist/src'));
             }
         
-            @SequenceTask() // this special annotation using "run-sequence" module to run returned task in sequence
+            @SequenceTask() // this special annotation using "run-sequence" module to run returned tasks in sequence
             build() {
                 return ['copyFiles', 'copy-source-files'];
             }
         
             @Task()
-            default() {
+            default() { // because this task has "default" name it will be run as default gulp task
                 return ['build'];
             }
         
@@ -55,7 +55,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
             
     ```
     
-4. How to run?
+4. How to run
 
     The way you run gulp depend of your tsconfig configuration. If you are not using "outDir" in the tsconfig then
     you probably no need to do anything - since you are outputting .js code right to the same directory as your
@@ -71,6 +71,12 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
     First option is preferred because most probably it will be annoying for you to run gulp every time you need to run some task.
 
+
+## Caveats
+
+Its important to understand that you will not able to run your gulp tasks *until* you compile your `gulpfile.ts` file.
+This means that if compiling is a part of your gulp process you will not be able to use it,
+because there are no gulpfile.js compiled from gulpfile.ts file.
 
 ## Samples
 

@@ -31,7 +31,6 @@ export function Task(name?: string): Function {
     }
 }
 
-
 /**
  * Tasks will be run in sequence when using this annotation.
  */
@@ -42,6 +41,20 @@ export function SequenceTask(name?: string): Function {
             method: key,
             name: name || key,
             isSequence: true
+        });
+    }
+}
+
+/**
+ * Tasks will be run merged when using this annotation.
+ */
+export function MergedTask(name?: string): Function {
+    return function(target: Function, key: string) {
+        defaultMetadataStorage.addTaskMetadata({
+            classConstructor: target.constructor,
+            method: key,
+            name: name || key,
+            isMerge: true
         });
     }
 }

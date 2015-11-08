@@ -2,57 +2,76 @@ import {Gulpclass, Task, SequenceTask} from "./src/Annotations";
 import * as gulp from "gulp";
 
 const del: any = require('del');
-const plumber: any = require('gulp-plumber');
-const ts: any = require('gulp-typescript');
 const shell: any = require('gulp-shell');
 const fs: any = require('fs');
+const replace: any = require('gulp-replace');
 const dtsGenerator: any = require('dts-generator').default;
 
 @Gulpclass()
 export class Gulpfile {
 
+    /**
+     * Cleans compiled files.
+     */
     @Task()
-    clean(cb: Function) {
-        return del(['./build/**', '!./build/es5/gulpfile.js'], cb);
+    cleanCompiled(cb: Function) {
+        return del(['./build/es5/**'], cb);
     }
 
+    /**
+     * Cleans generated package files.
+     */
+    @Task()
+    cleanPackage(cb: Function) {
+        return del(['./build/package/**'], cb);
+    }
+
+    /**
+     * Runs typescript files compilation.
+     */
     @Task()
     compile() {
-        var tsProject = ts.createProject('./tsconfig.json', {
-            sortOutput: true,
-            typescript: require('typescript')
-        });
-        return tsProject.src()
-            .pipe(plumber())
-            .pipe(ts(tsProject))
-            .js
-            .pipe(gulp.dest('./build/es5'));
-    }
-
-    @Task()
-    tsd() {
         return gulp.src('*.js', { read: false })
             .pipe(shell([
-                './node_modules/.bin/tsd install',
-                './node_modules/.bin/tsd rebundle',
-                './node_modules/.bin/tsd link'
+                './node_modules/.bin/tsc'
             ]));
     }
 
+    /**
+     * Copies all files that will be in a package.
+     */
     @Task()
-    buildPackageCopySrc() {
+    packageFiles() {
         return gulp.src('./build/es5/src/*')
             .pipe(gulp.dest('./build/package'));
     }
 
+    /**
+     * Change the "private" state of the packaged package.json file to public.
+     */
     @Task()
-    buildPackageCopyFiles() {
-        return gulp.src(['./package.json', './README.md'])
+    packagePreparePackageFile() {
+        return gulp.src('./package.json')
+            .pipe(replace('"private": true,', '"private": false,'))
             .pipe(gulp.dest('./build/package'));
     }
 
+    /**
+     * This task will replace all typescript code blocks in the README (since npm does not support typescript syntax
+     * highlighting) and copy this README file into the package folder.
+     */
     @Task()
-    buildPackageGenerateDts(cb: Function) {
+    packageReadmeFile() {
+        return gulp.src('./README.md')
+            .pipe(replace(/```typescript([\s\S]*?)```/g, '```javascript$1```'))
+            .pipe(gulp.dest('./build/package'));
+    }
+
+    /**
+     * Generates a .d.ts file that is needed for the npm package and will be imported by others.
+     */
+    @Task()
+    packageGenerateDts(cb: Function) {
         let name = require(__dirname + '/../../package.json').name;
         dtsGenerator({
             name: name,
@@ -63,18 +82,16 @@ export class Gulpfile {
         cb();
     }
 
+    /**
+     * Creates a package that can be published to npm.
+     */
     @SequenceTask()
     package() {
         return [
-            'clean',
+            ['cleanCompiled', 'cleanPackage'],
             'compile',
-            ['buildPackageCopySrc', 'buildPackageCopyFiles', 'buildPackageGenerateDts']
+            ['packageFiles', 'packagePreparePackageFile', 'packageReadmeFile', 'packageGenerateDts']
         ];
-    }
-
-    @SequenceTask()
-    default() {
-        return ['clean', 'compile'];
     }
 
     // -------------------------------------------------------------------------

@@ -23,4 +23,9 @@ export interface TaskMetadata {
      */
     isSequence?: boolean;
 
+    /**
+     * Indicates if this task will be run using merge2 component.
+     */
+    isMerge?: boolean;
+
 }
