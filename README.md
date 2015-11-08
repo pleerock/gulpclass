@@ -8,7 +8,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
     `npm install --save gulpfile.ts`
 
-2. Install depend tsd dependencies:
+2. Install required tsd dependencies:
 
     `tsd install --save gulp`
 
@@ -16,50 +16,50 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
     ```typescript
     
-        import {Gulpclass, Task} from "gulpfile.ts/Annotations";
-        import * as gulp from "gulp";
-        
-        let del: any = require('del'); // you probably want to define a classes that does not have type definition this way
-        
-        @Gulpclass()
-        export class Gulpfile {
-        
-            @Task()
-            clean(cb: Function) {
-                return del(['./dist/**'], cb);
-            }
-        
-            @Task()
-            copyFiles() {
-                return gulp.src(['./README.md'])
-                    .pipe(gulp.dest('./dist'));
-            }
-        
-            @Task('copy-source-files') // you can specify custom task name if you need
-            copySourceFiles() {
-                return gulp.src(['./src/**.js'])
-                    .pipe(gulp.dest('./dist/src'));
-            }
-        
-            @SequenceTask() // this special annotation using "run-sequence" module to run returned tasks in sequence
-            build() {
-                return ['copyFiles', 'copy-source-files'];
-            }
-        
-            @Task()
-            default() { // because this task has "default" name it will be run as default gulp task
-                return ['build'];
-            }
-        
+    import {Gulpclass, Task} from "gulpfile.ts/Annotations";
+    import * as gulp from "gulp";
+    
+    let del: any = require('del'); // you probably want to define a classes that does not have type definition this way
+    
+    @Gulpclass()
+    export class Gulpfile {
+    
+        @Task()
+        clean(cb: Function) {
+            return del(['./dist/**'], cb);
         }
+    
+        @Task()
+        copyFiles() {
+            return gulp.src(['./README.md'])
+                .pipe(gulp.dest('./dist'));
+        }
+    
+        @Task('copy-source-files') // you can specify custom task name if you need
+        copySourceFiles() {
+            return gulp.src(['./src/**.js'])
+                .pipe(gulp.dest('./dist/src'));
+        }
+    
+        @SequenceTask() // this special annotation using "run-sequence" module to run returned tasks in sequence
+        build() {
+            return ['copyFiles', 'copy-source-files'];
+        }
+    
+        @Task()
+        default() { // because this task has "default" name it will be run as default gulp task
+            return ['build'];
+        }
+    
+    }
             
     ```
     
 4. How to run
 
     The way you run gulp depend of your tsconfig configuration. If you are not using "outDir" in the tsconfig then
-    you probably no need to do anything - since you are outputting .js code right to the same directory as your
-    gulpfile.ts you will have gulpfile.js right at the same directory, so you can run `gulp` as you usually do.
+    you probably don't need to do anything - since you are outputting .js code right to the same directory as your
+    gulpfile.ts you will have gulpfile.js right in the same directory, so you can run `gulp` as you usually do.
      
      
     But if you are using "outDir" in your tsconfig, you need to do some extra stuff. 
