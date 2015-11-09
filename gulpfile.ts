@@ -42,7 +42,7 @@ export class Gulpfile {
      */
     @Task()
     packageFiles() {
-        return gulp.src('./build/es5/src/*')
+        return gulp.src('./build/es5/src/**/*')
             .pipe(gulp.dest('./build/package'));
     }
 

@@ -8,14 +8,13 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
     `npm install --save gulpfile.ts`
 
-2. Install required tsd dependencies:
+2. Install required [tsd](http://definitelytyped.org/tsd/) dependencies:
 
     `tsd install --save gulp`
 
 3. Create a `gulpfile.ts` and describe your tasks
     
     ```typescript
-    
     import {Gulpclass, Task} from "gulpfile.ts/Annotations";
     import * as gulp from "gulp";
     
@@ -52,7 +51,6 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
         }
     
     }
-            
     ```
     
 4. How to run
