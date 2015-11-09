@@ -61,7 +61,6 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     you probably don't need to do anything - since you are outputting .js code right to the same directory as your
     gulpfile.ts you will have gulpfile.js right in the same directory, so you can run `gulp` as you usually do.
      
-     
     But if you are using "outDir" in your tsconfig, you need to do some extra stuff. 
     Lets say you have specified "build/" as "outDir" in tsconfig.
     There are two options what you can do:
@@ -82,7 +81,7 @@ because there are no gulpfile.js compiled from gulpfile.ts file.
 
 This project itself using [gulpfile.ts](https://github.com/PLEEROCK/gulpfile.ts/blob/master/gulpfile.ts).
 Take a look on it as an example.
-    
+
 
 [1]: https://github.com/PLEEROCK/microframework
 [2]: https://github.com/gulpfile.tsjs/gulpfile.ts

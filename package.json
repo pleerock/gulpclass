@@ -1,6 +1,6 @@
 {
   "name": "gulpfile.ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Make a beautiful class-based gulpfiles with Typescript and Gulpfile.ts",
   "license": "Apache-2.0",
@@ -43,7 +43,7 @@
     "typescript": "^1.6.2"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/tsd install && ./node_modules/.bin/tsd rebundle && ./node_modules/.bin/tsd link && ./node_modules/.bin/tsc",
+    "start": "./node_modules/.bin/tsd install && ./node_modules/.bin/tsd rebundle && ./node_modules/.bin/tsd link && ./node_modules/.bin/tsc",
     "postversion": "./node_modules/.bin/gulp package"
   }
 }
