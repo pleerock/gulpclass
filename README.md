@@ -72,8 +72,8 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 ## Caveats
 
 Its important to understand that you will not able to run your gulp tasks *until* you compile your `gulpfile.ts` file.
-This means that if compiling is a part of your gulp process you will not be able to use it,
-because there are no gulpfile.js compiled from gulpfile.ts file.
+This means that if compiling is a part of your gulp tasks you will not be able to use it,
+because there is no gulpfile.js compiled from gulpfile.ts file.
 
 ## Samples
 
