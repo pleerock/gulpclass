@@ -1,4 +1,4 @@
-# Make a beautiful class-based gulpfiles with Typescript and Gulpfile.ts
+# Make a beautiful class-based gulpfiles with Typescript and Gulpclass
 
 Allows to create a gulp files in classes, each method of which can be a gulp task.
 
