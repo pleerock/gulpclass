@@ -19,6 +19,17 @@ export class Gulpfile {
     }
 
     /**
+     * Publishes a package to npm from ./build/package directory.
+     */
+    @Task()
+    npmPublish() {
+        return gulp.src('*.js', { read: false })
+            .pipe(shell([
+                'cd ./build/package && npm publish'
+            ]));
+    }
+
+    /**
      * Cleans generated package files.
      */
     @Task()
@@ -94,6 +105,14 @@ export class Gulpfile {
             'compile',
             ['packageFiles', 'packagePreparePackageFile', 'packageReadmeFile', 'packageGenerateDts']
         ];
+    }
+
+    /**
+     * Creates a package and publishes it to npm.
+     */
+    @SequenceTask()
+    publish() {
+        return ['package', 'npmPublish'];
     }
 
 }

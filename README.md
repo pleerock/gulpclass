@@ -2,20 +2,22 @@
 
 Allows to create a gulp files in classes, each method of which can be a gulp task.
 
-## Simple Usage
+## Installation
 
 1. Install module:
 
-    `npm install --save gulpfile.ts`
+    `npm install --save gulpclass`
 
 2. Install required [tsd](http://definitelytyped.org/tsd/) dependencies:
 
     `tsd install --save gulp`
 
-3. Create a `gulpfile.ts` and describe your tasks
+## Usage
+
+1. Create a `gulpfile.ts` and describe your tasks
     
     ```typescript
-    import {Gulpclass, Task} from "gulpfile.ts/Annotations";
+    import {Gulpclass, Task} from "gulpclass/Annotations";
     import * as gulp from "gulp";
     
     let del: any = require('del'); // you probably want to define a classes that does not have type definition this way
@@ -53,7 +55,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     }
     ```
     
-4. How to run
+2. How to run
 
     The way you run gulp depend of your tsconfig configuration. If you are not using "outDir" in the tsconfig then
     you probably don't need to do anything - since you are outputting .js code right to the same directory as your
@@ -77,9 +79,9 @@ because there is no gulpfile.js compiled from gulpfile.ts file.
 
 ## Samples
 
-This project itself using [gulpfile.ts](https://github.com/PLEEROCK/gulpfile.ts/blob/master/gulpfile.ts).
+This project itself using [gulpfile.ts](https://github.com/PLEEROCK/gulpclass/blob/master/gulpfile.ts).
 Take a look on it as an example.
 
 
 [1]: https://github.com/PLEEROCK/microframework
-[2]: https://github.com/gulpfile.tsjs/gulpfile.ts
+[2]: https://github.com/gulpclass/gulpfile.ts
