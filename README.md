@@ -6,11 +6,11 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
 1. Install module:
 
-    `npm install --save gulpclass`
+    `npm install gulpclass --save`
 
 2. Install required [tsd](http://definitelytyped.org/tsd/) dependencies:
 
-    `tsd install --save gulp`
+    `tsd install gulp --save`
 
 ## Usage
 
