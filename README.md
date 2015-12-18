@@ -57,6 +57,17 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
 2. How to run
 
+    the easiest way is to create a **gulpfile.js** and put there this peace of code there:
+    ```javascript
+        eval(require('typescript').transpile(require('fs').readFileSync('./gulpfile.ts').toString()));
+    ```
+    this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes tralated result
+    as javascript.
+    
+    (you maight run `npm install typescript --save` if you dont have typescript package installed)
+    
+    **alternative approaches (old approaches):**
+
     The way you run gulp depend of your tsconfig configuration. If you are not using "outDir" in the tsconfig then
     you probably don't need to do anything - since you are outputting .js code right to the same directory as your
     gulpfile.ts you will have gulpfile.js right in the same directory, so you can run `gulp` as you usually do.
@@ -75,7 +86,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
 Its important to understand that you will not able to run your gulp tasks *until* you compile your `gulpfile.ts` file.
 This means that if compiling is a part of your gulp tasks you will not be able to use it,
-because there is no gulpfile.js compiled from gulpfile.ts file.
+because there is no gulpfile.js compiled from gulpfile.ts file. However latest suggested method of running your gulpfile.ts should resolve this problem.
 
 ## Samples
 
