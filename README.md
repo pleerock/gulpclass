@@ -59,12 +59,12 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
     the easiest way is to create a **gulpfile.js** and put there this peace of code there:
     ```javascript
-        eval(require('typescript').transpile(require('fs').readFileSync('./gulpfile.ts').toString()));
+    eval(require('typescript').transpile(require('fs').readFileSync('./gulpfile.ts').toString()));
     ```
     this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes tralated result
     as javascript.
     
-    (you maight run `npm install typescript --save` if you dont have typescript package installed)
+    (you can run `npm install typescript --save` if you dont have typescript package installed)
     
     **alternative approaches (old approaches):**
 
