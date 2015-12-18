@@ -57,7 +57,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
 2. How to run
 
-    the easiest way is to create a **gulpfile.js** and put there this peace of code there:
+    the easiest way is to create a **gulpfile.js** and put there this peace of code:
     ```javascript
     eval(require('typescript').transpile(require('fs').readFileSync('./gulpfile.ts').toString()));
     ```
