@@ -64,7 +64,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes tralated result
     as javascript.
     
-    (you can run `npm install typescript --save` if you dont have typescript package installed)
+    (you need to run `npm install typescript --save` if you dont have typescript package installed)
     
     **alternative approaches (old approaches):**
 
