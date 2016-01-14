@@ -57,37 +57,31 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
 2. How to run
 
-    the easiest way is to create a **gulpfile.js** and put there this peace of code:
+    There is a caveat of using gulp and typescript together. The problem is that when you run your `gulp` commands 
+    in console, gulp cannot read your tasks from your typescript code - it can read only from `gulpfile.js`. 
+    But there is a simple workaround - you can create a gulpfile.js, compile and execute typescript on-the-fly.
+    
+    create a **gulpfile.js** and put there this peace of code:
     ```javascript
     eval(require('typescript').transpile(require('fs').readFileSync('./gulpfile.ts').toString()));
     ```
-    this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes tralated result
-    as javascript.
+    this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes transpiled result as javascript.
     
-    (you need to run `npm install typescript --save` if you dont have typescript package installed)
+    (you need to run `npm install typescript --save-dev` if you dont have typescript package installed)
     
-    **alternative approaches (old approaches):**
+    Please note that if you are NOT using `outDir` in typescript compile options, you may have problems if your 
+    gulpclass file is named `gulpfile.ts` typescript compiler will try to compile it to `gulpfile.js`, and will override
+    code you added to gulpfile.js. Solution is simple - rename your `gulpfile.ts`. You can call it as you wish, 
+    for example you can call it `gulpclass.ts`.
+    
+    **alternative approaches (not recommended):**
 
-    The way you run gulp depend of your tsconfig configuration. If you are not using "outDir" in the tsconfig then
-    you probably don't need to do anything - since you are outputting .js code right to the same directory as your
-    gulpfile.ts you will have gulpfile.js right in the same directory, so you can run `gulp` as you usually do.
-     
-    But if you are using "outDir" in your tsconfig, you need to do some extra stuff. 
-    Lets say you have specified "build/" as "outDir" in tsconfig.
-    There are two options what you can do:
-    
+    alternative approaches depend of tsconfig configuration you use. These examples assume that you are using 
+    `"outDir": "build"` as a directory to where files are compiled:
+
     * create `gulpfile.js` and put there ```require('build/gulpfile')```
     * or run gulp in cmd with extra parameters: `gulp --gulpfile build/gulpfile.js --cwd .`
     
-    First option is preferred because most probably it will be annoying for you to run gulp every time you need to run some task.
-
-
-## Caveats
-
-Its important to understand that you will not able to run your gulp tasks *until* you compile your `gulpfile.ts` file.
-This means that if compiling is a part of your gulp tasks you will not be able to use it,
-because there is no gulpfile.js compiled from gulpfile.ts file. However latest suggested method of running your gulpfile.ts should resolve this problem.
-
 ## Samples
 
 This project itself using [gulpfile.ts](https://github.com/PLEEROCK/gulpclass/blob/master/gulpfile.ts).
