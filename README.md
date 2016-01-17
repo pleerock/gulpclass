@@ -14,10 +14,10 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
     ```typescript
     import {Gulpclass, Task} from "gulpclass/Decorators";
-    import * as gulp from "gulp";
-    
-    let del: any = require("del"); // you probably want to define a classes that does not have type definition this way
-    
+
+    let gulp = require("gulp");
+    let del = require("del");
+
     @Gulpclass()
     export class Gulpfile {
     
