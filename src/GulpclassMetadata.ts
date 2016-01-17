@@ -1,11 +1,9 @@
-import {Gulp} from "gulp";
-
 /**
  * Metadata of the Gulpclass annotation.
  */
 export interface GulpclassMetadata {
 
-    gulpInstance: Gulp;
+    gulpInstance: any;
     classConstructor: Function;
     classInstance?: Object;
 

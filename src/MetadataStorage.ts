@@ -45,9 +45,9 @@ export class MetadataStorage {
         gulpclassMetadata.gulpInstance.task(taskMetadata.name, (cb: Function) => {
             const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
             if (taskMetadata.isSequence && methodResult instanceof Array) {
-                return require('run-sequence').apply(this, methodResult.concat(cb));
+                return require("run-sequence").apply(this, methodResult.concat(cb));
             } else if (taskMetadata.isSequence && methodResult instanceof Array) {
-                return require('merge2').apply(this);
+                return require("merge2").apply(this);
             } else {
                 return methodResult;
             }

@@ -8,10 +8,6 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
     `npm install gulpclass --save-dev`
 
-2. Install required [tsd](http://definitelytyped.org/tsd/) dependencies:
-
-    `tsd install gulp --save`
-
 ## Usage
 
 1. Create a `gulpfile.ts` and describe your tasks
@@ -20,36 +16,36 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     import {Gulpclass, Task} from "gulpclass/Decorators";
     import * as gulp from "gulp";
     
-    let del: any = require('del'); // you probably want to define a classes that does not have type definition this way
+    let del: any = require("del"); // you probably want to define a classes that does not have type definition this way
     
     @Gulpclass()
     export class Gulpfile {
     
         @Task()
         clean(cb: Function) {
-            return del(['./dist/**'], cb);
+            return del(["./dist/**"], cb);
         }
     
         @Task()
         copyFiles() {
-            return gulp.src(['./README.md'])
-                .pipe(gulp.dest('./dist'));
+            return gulp.src(["./README.md"])
+                .pipe(gulp.dest("./dist"));
         }
     
-        @Task('copy-source-files') // you can specify custom task name if you need
+        @Task("copy-source-files") // you can specify custom task name if you need
         copySourceFiles() {
-            return gulp.src(['./src/**.js'])
-                .pipe(gulp.dest('./dist/src'));
+            return gulp.src(["./src/**.js"])
+                .pipe(gulp.dest("./dist/src"));
         }
     
         @SequenceTask() // this special annotation using "run-sequence" module to run returned tasks in sequence
         build() {
-            return ['copyFiles', 'copy-source-files'];
+            return ["copyFiles", "copy-source-files"];
         }
     
         @Task()
         default() { // because this task has "default" name it will be run as default gulp task
-            return ['build'];
+            return ["build"];
         }
     
     }
@@ -63,7 +59,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
     create a **gulpfile.js** and put there this peace of code:
     ```javascript
-    eval(require('typescript').transpile(require('fs').readFileSync('./gulpfile.ts').toString()));
+    eval(require("typescript").transpile(require("fs").readFileSync("./gulpfile.ts").toString()));
     ```
     this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes transpiled result as javascript.
     
@@ -79,7 +75,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     alternative approaches depend of tsconfig configuration you use. These examples assume that you are using 
     `"outDir": "build"` as a directory to where files are compiled:
 
-    * create `gulpfile.js` and put there ```require('build/gulpfile')```
+    * create `gulpfile.js` and put there ```require("build/gulpfile")```
     * or run gulp in cmd with extra parameters: `gulp --gulpfile build/gulpfile.js --cwd .`
     
 ## Samples

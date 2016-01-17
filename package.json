@@ -1,6 +1,6 @@
 {
   "name": "gulpclass",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "description": "Make a beautiful class-based gulpfiles with Typescript and Gulpfile.ts",
   "license": "Apache-2.0",
@@ -22,16 +22,15 @@
     "gulpclass",
     "gulp"
   ],
-  "typings": "./gulpclass.d.ts",
   "typescript": {
     "definitions": [
-      "gulpclass.d.ts"
+      "index.d.ts"
     ]
   },
   "dependencies": {
-    "gulp": "*",
-    "run-sequence": "*",
-    "merge2": "*"
+    "gulp": "^3.9.0",
+    "merge2": "^0.3.6",
+    "run-sequence": "^1.1.5"
   },
   "devDependencies": {
     "del": "^2.0.2",
