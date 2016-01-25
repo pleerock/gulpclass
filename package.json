@@ -1,6 +1,6 @@
 {
   "name": "gulpclass",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "description": "Make a beautiful class-based gulpfiles with Typescript and Gulpfile.ts",
   "license": "Apache-2.0",

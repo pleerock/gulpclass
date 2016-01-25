@@ -42,17 +42,28 @@ export class MetadataStorage {
         if (!gulpclassMetadata.classInstance)
             gulpclassMetadata.classInstance = new (<any>gulpclassMetadata.classConstructor)();
 
-        gulpclassMetadata.gulpInstance.task(taskMetadata.name, (cb: Function) => {
-            const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
-            if (taskMetadata.isSequence && methodResult instanceof Array) {
-                return require("run-sequence").apply(this, methodResult.concat(cb));
-            } else if (taskMetadata.isSequence && methodResult instanceof Array) {
-                return require("merge2").apply(this);
-            } else {
-                return methodResult;
-            }
-        });
+        if (taskMetadata.dependencies && taskMetadata.dependencies.length) {
+            gulpclassMetadata.gulpInstance.task(taskMetadata.name, taskMetadata.dependencies, (cb: Function) => {
+                return this.executeTask(gulpclassMetadata, taskMetadata, cb);
+            });
+        } else {
+            gulpclassMetadata.gulpInstance.task(taskMetadata.name, (cb: Function) => {
+                return this.executeTask(gulpclassMetadata, taskMetadata, cb);
+            });
+        }
     }
+
+    private executeTask(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata, cb: Function) {
+        const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
+        if (taskMetadata.isSequence && methodResult instanceof Array) {
+            return require("run-sequence").apply(this, methodResult.concat(cb));
+        } else if (taskMetadata.isSequence && methodResult instanceof Array) {
+            return require("merge2").apply(this);
+        } else {
+            return methodResult;
+        }
+    }
+
 }
 
 /**

@@ -19,6 +19,11 @@ export interface TaskMetadata {
     name: string;
 
     /**
+     * Task dependencies
+     */
+    dependencies: string[];
+
+    /**
      * Indicates if this task will be run using run-sequence component.
      */
     isSequence?: boolean;
