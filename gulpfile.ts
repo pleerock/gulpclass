@@ -4,8 +4,6 @@ const gulp = require("gulp");
 const del = require("del");
 const shell = require("gulp-shell");
 const replace = require("gulp-replace");
-const dtsGenerator = require("dts-generator").default;
-const glob = require("glob");
 
 @Gulpclass()
 export class Gulpfile {
@@ -79,20 +77,12 @@ export class Gulpfile {
     }
 
     /**
-     * Generates a .d.ts file that is needed for the npm package and will be imported by others.
+     * This task will copy typings.json file to the build package.
      */
     @Task()
-    packageGenerateDts(cb: Function) {
-        glob("./src/**/*.ts", (err: any, files: string[]) => {
-            const name = require(__dirname + "/../../package.json").name;
-            dtsGenerator({
-                name: name,
-                baseDir: "./src",
-                files: files,
-                out: "./build/package/index.d.ts"
-            });
-            cb();
-        });
+    copyTypingsFile() {
+        return gulp.src("./typings.json")
+            .pipe(gulp.dest("./build/package"));
     }
 
     /**
@@ -103,7 +93,7 @@ export class Gulpfile {
         return [
             ["cleanCompiled", "cleanPackage"],
             "compile",
-            ["packageFiles", "packagePreparePackageFile", "packageReadmeFile", "packageGenerateDts"]
+            ["packageFiles", "packagePreparePackageFile", "packageReadmeFile", "copyTypingsFile"]
         ];
     }
 

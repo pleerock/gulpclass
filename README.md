@@ -8,12 +8,16 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
     `npm install gulpclass --save-dev`
 
+2. Use [typings](https://github.com/typings/typings) to install all required definition dependencies.
+
+    `typings install`
+
 ## Usage
 
 1. Create a `gulpfile.ts` and describe your tasks
     
     ```typescript
-    import {Gulpclass, Task} from "gulpclass/Decorators";
+    import {Gulpclass, Task, SequenceTask} from "gulpclass/Decorators";
 
     let gulp = require("gulp");
     let del = require("del");
@@ -82,7 +86,3 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
 This project itself using [gulpfile.ts](https://github.com/PLEEROCK/gulpclass/blob/master/gulpfile.ts).
 Take a look on it as an example.
-
-
-[1]: https://github.com/PLEEROCK/microframework
-[2]: https://github.com/gulpclass/gulpfile.ts
