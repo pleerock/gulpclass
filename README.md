@@ -84,5 +84,5 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
 ## Samples
 
-This project itself using [gulpfile.ts](https://github.com/PLEEROCK/gulpclass/blob/master/gulpfile.ts).
+This project itself using [gulpfile.ts](https://github.com/pleerock/gulpclass/blob/master/gulpfile.ts).
 Take a look on it as an example.
