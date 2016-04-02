@@ -107,6 +107,27 @@ someTask() {
 }
 ```
 
+* Why my task `gulp.task("default", ["clean", "compile", "build"])` is not working?
+
+I have such task and its not working:
+
+```typescript
+@Task("default")
+default() {
+    return ["clean", "compile", "build"];
+}
+```
+
+Why? Because the array you are returning is what task is doing, not a task
+dependencies as you wish:
+
+```typescript
+@Task("default", ["clean", "compile", "build"])
+default() {
+}
+```
+
+
 ## Samples
 
 This project itself using [gulpfile.ts](https://github.com/pleerock/gulpclass/blob/master/gulpfile.ts).
