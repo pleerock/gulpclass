@@ -81,7 +81,32 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
     * create `gulpfile.js` and put there ```require("build/gulpfile")```
     * or run gulp in cmd with extra parameters: `gulp --gulpfile build/gulpfile.js --cwd .`
-    
+
+## FAQ
+
+* How to load tasks from multiple files?
+
+edit your `gulpfile.js` and change it following way:
+
+```javascript
+const files = [
+    "./othertask.ts",
+    "./gulpfile.ts"
+];
+files.forEach(function(file) { eval(require("typescript").transpile(require("fs").readFileSync(file).toString())) });
+```
+
+* How to use task dependencies?
+
+Simple use second argument of the `@Task` decorator:
+
+```typescript
+@Task("someTask", ["clean", "compile"])
+someTask() {
+    return doSomething();
+}
+```
+
 ## Samples
 
 This project itself using [gulpfile.ts](https://github.com/pleerock/gulpclass/blob/master/gulpfile.ts).
