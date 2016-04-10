@@ -74,13 +74,15 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     code you added to gulpfile.js. Solution is simple - rename your `gulpfile.ts`. You can call it as you wish, 
     for example you can call it `gulpclass.ts`.
     
-    **alternative approaches (not recommended):**
+    ####alternative approaches
 
     alternative approaches depend of tsconfig configuration you use. These examples assume that you are using 
     `"outDir": "build"` as a directory to where files are compiled:
 
     * create `gulpfile.js` and put there ```require("build/gulpfile")```
     * or run gulp in cmd with extra parameters: `gulp --gulpfile build/gulpfile.js --cwd .`
+    
+    Benefits of this apporach is that you can use debug your gulp classes in IDEs.
 
 ## FAQ
 
