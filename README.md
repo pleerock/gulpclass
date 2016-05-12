@@ -17,7 +17,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 1. Create a `gulpfile.ts` and describe your tasks
     
     ```typescript
-    import {Gulpclass, Task, SequenceTask} from "gulpclass/Decorators";
+    import {Gulpclass, Task, SequenceTask} from "gulpclass";
 
     let gulp = require("gulp");
     let del = require("del");
