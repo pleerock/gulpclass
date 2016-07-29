@@ -57,6 +57,13 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
 2. How to run
 
+    ### First option. Use ts-node
+    
+    Install [ts-node](https://github.com/TypeStrong/ts-node), it supports running gulp tasks directly using gulp command
+    
+    
+    ### Second options. If you don't want to use ts-node
+
     There is a caveat of using gulp and typescript together. The problem is that when you run your `gulp` commands 
     in console, gulp cannot read your tasks from your typescript code - it can read only from `gulpfile.js`. 
     But there is a simple workaround - you can create a gulpfile.js, compile and execute typescript on-the-fly.
