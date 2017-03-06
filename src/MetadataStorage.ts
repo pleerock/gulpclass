@@ -58,7 +58,11 @@ export class MetadataStorage {
     private executeTask(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata, cb: Function) {
         const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
         if (taskMetadata.isSequence && methodResult instanceof Array) {
-            return runSequence.apply(this, methodResult.concat(cb));
+            if (typeof methodResult[methodResult.length - 1] !== "function") {
+                methodResult.push(cb);
+            }
+
+            return runSequence.apply(this, methodResult);
         } else if (taskMetadata.isMerge && methodResult instanceof Array) {
             return merge.apply(this, methodResult);
         } else {
