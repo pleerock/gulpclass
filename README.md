@@ -68,11 +68,11 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     in console, gulp cannot read your tasks from your typescript code - it can read only from `gulpfile.js`. 
     But there is a simple workaround - you can create a gulpfile.js, compile and execute typescript on-the-fly.
     
-    create a **gulpfile.js** and put there this peace of code:
+    Create a **gulpfile.js** and put there this piece of code:
     ```javascript
     eval(require("typescript").transpile(require("fs").readFileSync("./gulpfile.ts").toString()));
     ```
-    this peace of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes transpiled result as javascript.
+    This piece of code reads your gulpfile.ts contents, and asks typescript to transpile it on-the-fly and executes transpiled result as javascript.
     
     (you need to run `npm install typescript --save-dev` if you dont have typescript package installed)
     
@@ -81,9 +81,9 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     code you added to gulpfile.js. Solution is simple - rename your `gulpfile.ts`. You can call it as you wish, 
     for example you can call it `gulpclass.ts`.
     
-    ####alternative approaches
+    ## Alternative approaches
 
-    alternative approaches depend of tsconfig configuration you use. These examples assume that you are using 
+    Alternative approaches depend on which tsconfig configuration you use. These examples assume that you are using 
     `"outDir": "build"` as a directory to where files are compiled:
 
     * create `gulpfile.js` and put there ```require("build/gulpfile")```
@@ -95,7 +95,7 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
 
 * How to load tasks from multiple files?
 
-edit your `gulpfile.js` and change it following way:
+Edit your `gulpfile.js` and change it following way:
 
 ```javascript
 const files = [
@@ -118,7 +118,7 @@ someTask() {
 
 * Why my task `gulp.task("default", ["clean", "compile", "build"])` is not working?
 
-I have such task and its not working:
+I have such a task and its not working:
 
 ```typescript
 @Task("default")
