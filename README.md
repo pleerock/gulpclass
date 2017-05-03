@@ -18,20 +18,25 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
     
     ```typescript
     import {Gulpclass, Task, SequenceTask} from "gulpclass";
-
-    let gulp = require("gulp");
-    let del = require("del");
+    import * as gulp from "gulp";
+    import * as del from "del";
 
     @Gulpclass()
     export class Gulpfile {
     
-        @Task()
+        @Task() // return promise to indicate your task completion
+        clean() {
+            // del module returns promise for you automatically
+            return del("./dist/**");
+        }
+        
+        @Task() // or use provided callback instead
         clean(cb: Function) {
-            return del(["./dist/**"], cb);
+            return del("./dist/**", cb);
         }
     
         @Task()
-        copyFiles() {
+        copyFiles() { // don't forget to return stream from your task function
             return gulp.src(["./README.md"])
                 .pipe(gulp.dest("./dist"));
         }
@@ -47,9 +52,11 @@ Allows to create a gulp files in classes, each method of which can be a gulp tas
             return ["copyFiles", "copy-source-files"];
         }
     
-        @Task()
-        default() { // because this task has "default" name it will be run as default gulp task
-            return ["build"];
+        // list of dependencies could be specified as a second argument to trigger other tasks
+        // the example below is equivalent to `gulp.task("default", ["build"]);`
+        @Task("default", ["build"])
+        defaultTask() {
+            // using "defaultTask", because "default" is a reserved keyword in ES2015
         }
     
     }
