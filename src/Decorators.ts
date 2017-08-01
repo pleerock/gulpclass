@@ -18,6 +18,25 @@ export function Gulpclass(gulpInstance?: any): Function {
 }
 
 /**
+ * Registers a class from which tasks will be loaded, and from whose less-derived base classes
+ * tasks will also be loaded.
+ * You must specify your gulp instance so that the correct instance is used for inherited tasks
+ * when the base class is in another module/scope.
+ */
+export function GulpSubclass(gulpInstance: any): Function {
+    return function(target: Function) {
+        if (!gulpInstance)
+            gulpInstance = require("gulp");
+
+        defaultMetadataStorage.addGulpclassMetadata({
+            gulpInstance: gulpInstance,
+            classConstructor: target
+        });
+
+    }
+}
+
+/**
  * Registers a task with the given name. If name is not specified then object's method name will be used.
  */
 export function Task(name?: string, dependencies?: string[]): Function {

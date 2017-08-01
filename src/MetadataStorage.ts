@@ -22,23 +22,45 @@ export class MetadataStorage {
     addGulpclassMetadata(metadata: GulpclassMetadata) {
         this.gulpclassMetadatas.push(metadata);
         this.taskMetadatas
-            .filter(taskMetadata => taskMetadata.classConstructor === metadata.classConstructor)
-            .forEach(taskMetadata => this.registerTasks(metadata, taskMetadata));
+            .filter((taskMetadata: TaskMetadata) => {
+                return this.isOrInherits(taskMetadata.classConstructor, metadata.classConstructor, taskMetadata.name);
+            })
+            .forEach((taskMetadata: TaskMetadata) => this.registerTasks(metadata, taskMetadata));
     }
 
     addTaskMetadata(metadata: TaskMetadata) {
         this.taskMetadatas.push(metadata);
+        var gulpclassMetadata: GulpclassMetadata;
+        
+        this.gulpclassMetadatas.forEach((element) => {
+            if (this.isOrInherits(metadata.classConstructor, element.classConstructor, metadata.name)) {
+                gulpclassMetadata = element;
+            }
+        });
 
-        const gulpclassMetadata = this.gulpclassMetadatas.reduce((found, m) => {
-            return m.classConstructor === metadata.classConstructor ? m : found;
-        }, undefined);
-        if (gulpclassMetadata)
+        if (gulpclassMetadata) {
             this.registerTasks(gulpclassMetadata, metadata);
+        }
     }
 
     // -------------------------------------------------------------------------
     // Private Methods
     // -------------------------------------------------------------------------
+
+    private isOrInherits(pBase: Function, pSubclass: Function, name: string): boolean {
+        if (pSubclass === pBase) {
+            return true;
+        } else {
+            let current: any = pSubclass;
+            while (current.__proto__.name != 'Object') {
+                if (current === pBase) {
+                    return true;
+                }
+                current = current.__proto__;
+            }
+            return false;
+        }
+    }
 
     private registerTasks(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata) {
         if (!gulpclassMetadata.classInstance)
@@ -57,6 +79,7 @@ export class MetadataStorage {
 
     private executeTask(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata, cb: Function) {
         const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
+
         if (taskMetadata.isSequence && methodResult instanceof Array) {
             if (typeof methodResult[methodResult.length - 1] !== "function") {
                 methodResult.push(cb);
