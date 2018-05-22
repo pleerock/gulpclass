@@ -24,16 +24,12 @@
   ],
   "dependencies": {
     "@types/gulp": "^4.0.5",
-    "@types/node": "^10.1.2",
-    "@types/orchestrator": "^0.3.2",
-    "@types/q": "^1.5.0",
-    "gulp": "^3.9.1",
-    "merge2": "^1.2.2",
-    "run-sequence": "^2.2.1"
+    "@types/node": "*",
+    "@types/merge2": "^1.1.4",
+    "gulp": "^4.0.0",
+    "merge2": "^1.2.2"
   },
   "devDependencies": {
-    "@types/merge2": "^1.1.4",
-    "@types/run-sequence": "0.0.30",
     "del": "^3.0.0",
     "gulp-replace": "^1.0.0",
     "gulp-shell": "^0.6.5",
