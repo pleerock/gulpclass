@@ -29,7 +29,7 @@ export class MetadataStorage {
     addTaskMetadata(metadata: TaskMetadata) {
         this.taskMetadatas.push(metadata);
 
-        const gulpclassMetadata = this.gulpclassMetadatas.reduce((found, m) => {
+        const gulpclassMetadata = this.gulpclassMetadatas.reduce<GulpclassMetadata | undefined>((found, m) => {
             return m.classConstructor === metadata.classConstructor ? m : found;
         }, undefined);
         if (gulpclassMetadata)

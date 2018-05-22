@@ -41,9 +41,7 @@ export class Gulpfile {
     @Task()
     compile() {
         return gulp.src("*.js", { read: false })
-            .pipe(shell([
-                "./node_modules/.bin/tsc"
-            ]));
+            .pipe(shell(["tsc"]));
     }
 
     /**
