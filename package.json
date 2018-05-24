@@ -23,18 +23,19 @@
     "gulp"
   ],
   "dependencies": {
-    "gulp": "^3.9.0",
-    "merge2": "^0.3.6",
-    "run-sequence": "^1.1.5"
+    "@types/gulp": "^4.0.5",
+    "@types/node": "*",
+    "@types/merge2": "^1.1.4",
+    "gulp": "^4.0.0",
+    "merge2": "^1.2.2"
   },
   "devDependencies": {
-    "del": "^2.0.2",
-    "gulp-replace": "^0.5.4",
-    "gulp-shell": "^0.5.0",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.3"
+    "del": "^3.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-shell": "^0.6.5",
+    "typescript": "^2.8.3"
   },
   "scripts": {
-    "start": "./node_modules/.bin/typings install && ./node_modules/.bin/tsc"
+    "start": "tsc"
   }
 }

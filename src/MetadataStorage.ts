@@ -1,7 +1,7 @@
+import * as merge from "merge2";
+import * as gulp from "gulp";
 import {TaskMetadata} from "./TaskMetadata";
 import {GulpclassMetadata} from "./GulpclassMetadata";
-import * as merge from "merge2";
-import * as runSequence from "run-sequence";
 
 /**
  * Storages and registers all gulp classes and their tasks.
@@ -29,7 +29,7 @@ export class MetadataStorage {
     addTaskMetadata(metadata: TaskMetadata) {
         this.taskMetadatas.push(metadata);
 
-        const gulpclassMetadata = this.gulpclassMetadatas.reduce((found, m) => {
+        const gulpclassMetadata = this.gulpclassMetadatas.reduce<GulpclassMetadata | undefined>((found, m) => {
             return m.classConstructor === metadata.classConstructor ? m : found;
         }, undefined);
         if (gulpclassMetadata)
@@ -58,11 +58,7 @@ export class MetadataStorage {
     private executeTask(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata, cb: Function) {
         const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
         if (taskMetadata.isSequence && methodResult instanceof Array) {
-            if (typeof methodResult[methodResult.length - 1] !== "function") {
-                methodResult.push(cb);
-            }
-
-            return runSequence.apply(this, methodResult);
+            return gulpclassMetadata.gulpInstance.series.apply(this, methodResult)(cb);
         } else if (taskMetadata.isMerge && methodResult instanceof Array) {
             return merge.apply(this, methodResult);
         } else {
