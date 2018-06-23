@@ -36,6 +36,7 @@
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "start": "tsc"
+    "prepackage": "tsc",
+    "package": "gulp package"
   }
 }
