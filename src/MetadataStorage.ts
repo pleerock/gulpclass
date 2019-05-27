@@ -44,14 +44,14 @@ export class MetadataStorage {
         if (!gulpclassMetadata.classInstance)
             gulpclassMetadata.classInstance = new (<any>gulpclassMetadata.classConstructor)();
 
+
+        let fn = Object.defineProperty((cb: Function) => {
+            return this.executeTask(gulpclassMetadata, taskMetadata, cb);
+        }, 'name', {value: taskMetadata.name, configurable: true});
         if (taskMetadata.dependencies && taskMetadata.dependencies.length) {
-            gulpclassMetadata.gulpInstance.task(taskMetadata.name, taskMetadata.dependencies, (cb: Function) => {
-                return this.executeTask(gulpclassMetadata, taskMetadata, cb);
-            });
+            gulpclassMetadata.gulpInstance.task(taskMetadata.name, gulpclassMetadata.gulpInstance.series.apply(this, (taskMetadata.dependencies as any[]).concat(fn)));
         } else {
-            gulpclassMetadata.gulpInstance.task(taskMetadata.name, (cb: Function) => {
-                return this.executeTask(gulpclassMetadata, taskMetadata, cb);
-            });
+            gulpclassMetadata.gulpInstance.task(taskMetadata.name, fn);
         }
     }
 
