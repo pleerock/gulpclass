@@ -33,4 +33,8 @@ export interface TaskMetadata {
      */
     isMerge?: boolean;
 
+	/**
+	 * Indicates if this task's dependencies will run in parallel (is series otherwise)
+	 */
+	isParallelDepenencies?: boolean
 }
