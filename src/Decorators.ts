@@ -20,13 +20,14 @@ export function Gulpclass(gulpInstance?: any): Function {
 /**
  * Registers a task with the given name. If name is not specified then object's method name will be used.
  */
-export function Task(name?: string, dependencies?: string[]): Function {
+export function Task(name?: string, dependencies?: string[], isParallelDepenencies: boolean = true): Function {
     return function(target: Function, key: string) {
         defaultMetadataStorage.addTaskMetadata({
             classConstructor: target.constructor,
             method: key,
             name: name || key,
-            dependencies: dependencies || []
+			dependencies: dependencies || [],
+			isParallelDepenencies: isParallelDepenencies
         });
     }
 }

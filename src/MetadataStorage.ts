@@ -45,9 +45,15 @@ export class MetadataStorage {
             gulpclassMetadata.classInstance = new (<any>gulpclassMetadata.classConstructor)();
 
         if (taskMetadata.dependencies && taskMetadata.dependencies.length) {
-            gulpclassMetadata.gulpInstance.task(taskMetadata.name, taskMetadata.dependencies, (cb: Function) => {
+			const executeTask = (cb: Function) => {
                 return this.executeTask(gulpclassMetadata, taskMetadata, cb);
-            });
+            }
+			gulpclassMetadata.gulpInstance.task(
+				taskMetadata.name,
+				taskMetadata.isParallelDepenencies
+					? gulpclassMetadata.gulpInstance.series(gulpclassMetadata.gulpInstance.parallel(...taskMetadata.dependencies), executeTask)
+					: gulpclassMetadata.gulpInstance.series(...taskMetadata.dependencies, executeTask)
+			);
         } else {
             gulpclassMetadata.gulpInstance.task(taskMetadata.name, (cb: Function) => {
                 return this.executeTask(gulpclassMetadata, taskMetadata, cb);
