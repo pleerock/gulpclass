@@ -1,7 +1,8 @@
 import * as merge from "merge2";
-import * as gulp from "gulp";
-import {TaskMetadata} from "./TaskMetadata";
-import {GulpclassMetadata} from "./GulpclassMetadata";
+import { GulpclassMetadata } from "./GulpclassMetadata";
+import { TaskMetadata } from "./TaskMetadata";
+import * as gulp from 'gulp';
+import { TaskFunction } from "undertaker";
 
 /**
  * Storages and registers all gulp classes and their tasks.
@@ -41,13 +42,25 @@ export class MetadataStorage {
     // -------------------------------------------------------------------------
 
     private registerTasks(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata) {
-        if (!gulpclassMetadata.classInstance)
+        if (!gulpclassMetadata.classInstance) {
             gulpclassMetadata.classInstance = new (<any>gulpclassMetadata.classConstructor)();
+        }
 
         if (taskMetadata.dependencies && taskMetadata.dependencies.length) {
-            gulpclassMetadata.gulpInstance.task(taskMetadata.name, taskMetadata.dependencies, (cb: Function) => {
-                return this.executeTask(gulpclassMetadata, taskMetadata, cb);
-            });
+            const dependencies = [...taskMetadata.dependencies];
+            let args: any[] = [];
+
+            if (gulpclassMetadata.gulpInstance.series) {
+                args = [taskMetadata.name, gulp.series(...dependencies, (cb: Function) => {
+                    return this.executeTask(gulpclassMetadata, taskMetadata, cb);
+                })];
+            } else {
+                args = [taskMetadata.name, ...dependencies, (cb: Function) => {
+                    return this.executeTask(gulpclassMetadata, taskMetadata, cb);
+                }]
+            }
+
+            gulpclassMetadata.gulpInstance.task.apply(gulpclassMetadata.gulpInstance, args);
         } else {
             gulpclassMetadata.gulpInstance.task(taskMetadata.name, (cb: Function) => {
                 return this.executeTask(gulpclassMetadata, taskMetadata, cb);
@@ -58,9 +71,9 @@ export class MetadataStorage {
     private executeTask(gulpclassMetadata: GulpclassMetadata, taskMetadata: TaskMetadata, cb: Function) {
         const methodResult = (<any>gulpclassMetadata.classInstance)[taskMetadata.method](cb);
         if (taskMetadata.isSequence && methodResult instanceof Array) {
-            return gulpclassMetadata.gulpInstance.series.apply(this, methodResult)(cb);
+            return gulpclassMetadata.gulpInstance.series.apply(gulpclassMetadata.gulpInstance, methodResult)(cb);
         } else if (taskMetadata.isMerge && methodResult instanceof Array) {
-            return merge.apply(this, methodResult);
+            return merge.apply(null, methodResult);
         } else {
             return methodResult;
         }
